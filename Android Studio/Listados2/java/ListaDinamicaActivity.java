@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ListaDinamicaActivity extends AppCompatActivity {
+public class ListaDinamicaActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     ListView listaDinamica;
     ArrayList<Elemento> textos;
@@ -40,6 +40,8 @@ public class ListaDinamicaActivity extends AppCompatActivity {
 
         listaDinamica.setAdapter(adapter);
 
+        listaDinamica.setOnItemClickListener(this);
+
 
 
 
@@ -50,8 +52,30 @@ public class ListaDinamicaActivity extends AppCompatActivity {
         textos.add(texto);
         ArrayAdapter adapter = (ArrayAdapter)listaDinamica.getAdapter();
         adapter.notifyDataSetChanged();
+    }
+
+    public void borrar (View view) {
+
+        int size =textos.size();
+        Elemento texto = textos.get(size -1);
+        textos.remove(texto);
+        ArrayAdapter adapter = (ArrayAdapter)listaDinamica.getAdapter();
+        adapter.notifyDataSetChanged();
 
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        ArrayAdapter adapter = (ArrayAdapter) listaDinamica.getAdapter();
+
+        if (textos.get(position).imagen == R.drawable.ic_fiber_manual_record_black_24dp) {
+            textos.get(position).imagen = R.drawable.ic_check_circle_black_24dp;}
+            else if(textos.get(position).imagen == R.drawable.ic_check_circle_black_24dp) {
+             textos.get(position).imagen = R.drawable.ic_fiber_manual_record_black_24dp;
+        }
+
+        adapter.notifyDataSetChanged();
+    }
 }
